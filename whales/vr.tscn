@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=3 uid="uid://b3yuvlks3wbp7"]
+
+[ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
+[ext_resource type="PackedScene" uid="uid://diqwbjhmkv3ku" path="res://fish/Whale.fbx" id="2_6u44e"]
+[ext_resource type="Script" uid="uid://caow8kkk2y0ql" path="res://fish/whale.gd" id="3_80de6"]
+[ext_resource type="Script" uid="uid://imfjhg41sxtu" path="res://spinner.gd" id="3_jqvlu"]
+[ext_resource type="Material" uid="uid://crpfoqkucqu1q" path="res://materials/divingbelltres.tres" id="4_80de6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncpny"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_80de6"]
+material = ExtResource("4_80de6")
+radius = 3.0
+height = 3.0
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jqvlu"]
+cull_mode = 1
+albedo_color = Color(0, 0.46666667, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_lwrbq"]
+material = SubResource("StandardMaterial3D_jqvlu")
+radius = 16.0
+height = 32.0
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ncpny")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_ncpny")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+mesh = SubResource("BoxMesh_ncpny")
+skeleton = NodePath("../../LeftController")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 452.0
+offset_bottom = 154.0
+text = "Enter VR"
+
+[node name="Downlight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 4.006153, 0)
+
+[node name="Uplight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -3.9649167, 0)
+light_color = Color(0, 1, 1, 1)
+
+[node name="Painting" type="Node3D" parent="."]
+
+[node name="DivingBell" type="MeshInstance3D" parent="Painting"]
+mesh = SubResource("SphereMesh_80de6")
+
+[node name="OceanDome" type="MeshInstance3D" parent="Painting"]
+mesh = SubResource("SphereMesh_lwrbq")
+
+[node name="Spinner" type="Node3D" parent="Painting"]
+script = ExtResource("3_jqvlu")
+rotation_speed = -0.2
+
+[node name="Whale" parent="Painting/Spinner" instance=ExtResource("2_6u44e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+script = ExtResource("3_80de6")
+
+[node name="Whale2" parent="Painting/Spinner" instance=ExtResource("2_6u44e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.656235, 4.1017723, -3.2501233)
+script = ExtResource("3_80de6")
+
+[node name="Whale3" parent="Painting/Spinner" instance=ExtResource("2_6u44e")]
+transform = Transform3D(0.29252195, 0, 0.95625883, 0, 1, 0, -0.95625883, 0, 0.29252195, 4.8926897, 4.1017723, -11.818186)
+script = ExtResource("3_80de6")
+
+[node name="Whale4" parent="Painting/Spinner" instance=ExtResource("2_6u44e")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 4.207918, 0, 0)
+script = ExtResource("3_80de6")

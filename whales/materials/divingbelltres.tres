@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://crpfoqkucqu1q"]
+
+[ext_resource type="Texture2D" uid="uid://bq18q882t413p" path="res://patterns/pattern_49.png" id="1_mvop4"]
+
+[resource]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 1, 1, 0.36862746)
+emission_energy_multiplier = 7.56
+normal_enabled = true
+normal_texture = ExtResource("1_mvop4")
