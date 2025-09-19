@@ -1,18 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XR Paintings By Cycling Fern</title>
-</head>
-<body>
-    <p><a href="shipwreck/"><h1>Shipwreck</h1></a></p>
-    <p>A shipwreck scene with a whale and a manta ray. Painting #7.</p>
-    <p><a href="fish/"><h1>Fish</h1></a></p>
-    <p>A controllable blue fish. Painting #8.</p>
-    <p><a href="blank/"><h1>Blank</h1></a></p>
-    <p>A blank canvas. Painting #9.</p>
-    p><a href="beach/"><h1>Beach</h1></a></p>
-    <p>A nice beach... reality break. Painting 10#</p>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="A small collection of WebXR paintings by Cycling Fern. Open each scene to view interactive XR artworks." />
+        <title>XR Paintings — Cycling Fern</title>
+        <style>
+            /* Minimal styles for readability and responsive layout */
+            :root { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color-scheme: light dark; }
+            html,body { height:100%; margin:0; }
+            body { display:flex; align-items:center; justify-content:flex-start; padding:2rem; line-height:1.45; }
+            main { max-width:860px; width:100%; }
+            header h1 { margin:0 0 .25rem 0; font-size:1.75rem; }
+            header p.lead { margin:0 0 1rem 0; color:#555; }
+            .gallery { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem; }
+            .card { background:rgba(0,0,0,0.02); padding:1rem; border-radius:8px; text-decoration:none; color:inherit; border:1px solid rgba(0,0,0,0.04); }
+            .card h2 { margin:.25rem 0; font-size:1.125rem; }
+            .card p { margin:.25rem 0 .5rem 0; color:#333; }
+            a.card:focus, a.card:hover { outline:2px solid #4c9ffe44; box-shadow:0 2px 8px rgba(0,0,0,0.06); transform:translateY(-1px); }
+            footer { margin-top:2rem; color:#666; font-size:.95rem; }
+            @media (prefers-reduced-motion:reduce){ * { transition:none !important; animation:none !important;} }
+        </style>
+    </head>
+    <body>
+        <main>
+            <header>
+                <h1>XR Paintings</h1>
+                <p class="lead">A small collection of WebXR scenes by Cycling Fern. Click a painting to open its scene.</p>
+            </header>
+
+            <section class="gallery" aria-label="Paintings gallery">
+                <a class="card" href="shipwreck/">
+                    <h2>Shipwreck</h2>
+                    <p>A shipwreck scene with a whale and a manta ray. Painting #7.</p>
+                </a>
+
+                <a class="card" href="fish/">
+                    <h2>Fish</h2>
+                    <p>A controllable blue fish. Painting #8.</p>
+                </a>
+
+                <a class="card" href="blank/">
+                    <h2>Blank</h2>
+                    <p>A blank canvas. Painting #9.</p>
+                </a>
+
+                <a class="card" href="beach/">
+                    <h2>Beach</h2>
+                    <p>A nice beach... reality break. Painting #10.</p>
+                </a>
+            </section>
+
+            <footer>
+                <p>If you have issues loading a scene, try opening the folder's `index.html` directly (some browsers require secure contexts for WebXR). For local development you can use the included Vite config to run over HTTPS.</p>
+            </footer>
+        </main>
+    </body>
 </html>
