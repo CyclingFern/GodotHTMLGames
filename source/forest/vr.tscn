@@ -35,7 +35,7 @@ size = Vector2(50, 50)
 script = ExtResource("1_ncpny")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46616784, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2706395, 0, 0)
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 transform = Transform3D(-0.2783372, 0, -0.96048343, 0, 1, 0, 0.96048343, 0, -0.2783372, 0, 0.20518488, 0)
