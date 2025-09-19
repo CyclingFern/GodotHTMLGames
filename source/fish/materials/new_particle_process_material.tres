@@ -1,0 +1,5 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://cjsqanmfer6c3"]
+
+[resource]
+inherit_velocity_ratio = 0.16
+velocity_pivot = Vector3(0, 0.04, 0)

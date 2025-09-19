@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcfacrebmne1u"]
+
+[ext_resource type="Material" uid="uid://cwf83yevfsci4" path="res://materials/material_skydome_fog.tres" id="1_yp56f"]
+[ext_resource type="PackedScene" uid="uid://cqsh6138tk5er" path="res://models/ship-pirate-large.glb" id="2_h4i0r"]
+
+[node name="voyage" type="Node3D"]
+
+[node name="sea" type="CSGBox3D" parent="."]
+material_override = ExtResource("1_yp56f")
+size = Vector3(100, 0.1, 100)
+
+[node name="ship-pirate-large2" parent="." instance=ExtResource("2_h4i0r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026350498, -0.9323002, 1.1636242)
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+transform = Transform3D(-0.8758775, 0, 0.4825335, 0, 1, 0, -0.4825335, 0, -0.8758775, 0, 2.7725172, -3.4081812)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1.0000002, 0, 0, 0, 1, 0, 0, 0, 1.0000002, 0, 0.46801567, 0)

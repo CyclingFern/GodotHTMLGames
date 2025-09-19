@@ -1,0 +1,253 @@
+[gd_scene load_steps=33 format=3 uid="uid://rotrdr71jpd5"]
+
+[ext_resource type="Script" uid="uid://b82ctrsfv7nt" path="res://Main.gd" id="1_b57fe"]
+[ext_resource type="PackedScene" uid="uid://dj3kco6uj1w1r" path="res://models/barrel.glb" id="3_lgr22"]
+[ext_resource type="Material" uid="uid://ckcl0jswakyrj" path="res://materials/material_helmet_fog.tres" id="3_sc1dx"]
+[ext_resource type="Script" uid="uid://rfcmq822ytat" path="res://spinner.gd" id="4_5vvyt"]
+[ext_resource type="PackedScene" uid="uid://fgwvijpcv3yu" path="res://models/rocks-a.glb" id="4_trn2v"]
+[ext_resource type="PackedScene" uid="uid://b7f6x7pw8b1nq" path="res://models/rocks-b.glb" id="5_03owx"]
+[ext_resource type="PackedScene" uid="uid://7uvp2426og1i" path="res://models/rocks-c.glb" id="6_wkp8b"]
+[ext_resource type="PackedScene" uid="uid://x820lqflpri2" path="res://models/rocks-sand-a.glb" id="7_lgr22"]
+[ext_resource type="Material" uid="uid://cjsqanmfer6c3" path="res://materials/new_particle_process_material.tres" id="8_kjvhd"]
+[ext_resource type="Texture2D" uid="uid://ceequakwrkilm" path="res://textures/seaweed_green_a_outline.png" id="9_5tuhn"]
+[ext_resource type="AudioStream" uid="uid://bbtxc38k63ua8" path="res://sounds/bubbles-loop1-amp.ogg" id="10_2gh4u"]
+[ext_resource type="Script" uid="uid://c4va4xvrcry17" path="res://models/fish_3.gd" id="10_5vvyt"]
+[ext_resource type="PackedScene" uid="uid://bj7t5o801xc8v" path="res://models/Whale.fbx" id="10_20pc6"]
+[ext_resource type="PackedScene" uid="uid://b8uv7ymdjtkju" path="res://models/Fish3.fbx" id="10_wkp8b"]
+[ext_resource type="Material" uid="uid://deubrpwh1t74k" path="res://materials/material_sand.tres" id="13_j4qnp"]
+[ext_resource type="PackedScene" uid="uid://dhr27bue2sxbe" path="res://models/Fish2.fbx" id="14_2gh4u"]
+[ext_resource type="Script" uid="uid://dclkhu58681l3" path="res://models/fish_drone.gd" id="14_devvj"]
+[ext_resource type="Material" uid="uid://fad66uqgnrt5" path="res://materials/material_skydome.tres" id="14_fpfj3"]
+[ext_resource type="Script" uid="uid://c24g7mdgpgmq" path="res://models/fish_flocking.gd" id="15_devvj"]
+[ext_resource type="PackedScene" uid="uid://c3n10lf74xs3r" path="res://models/Manta ray.fbx" id="15_fpfj3"]
+[ext_resource type="Material" uid="uid://cwf83yevfsci4" path="res://materials/material_skydome_fog.tres" id="15_sc1dx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0cg2x"]
+
+[sub_resource type="Sky" id="Sky_ajyn8"]
+sky_material = SubResource("ProceduralSkyMaterial_0cg2x")
+
+[sub_resource type="Environment" id="Environment_r3nvd"]
+background_mode = 2
+sky = SubResource("Sky_ajyn8")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4tk31"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2gh4u"]
+transparency = 1
+albedo_texture = ExtResource("9_5tuhn")
+
+[sub_resource type="QuadMesh" id="QuadMesh_devvj"]
+material = SubResource("StandardMaterial3D_2gh4u")
+
+[sub_resource type="Skin" id="Skin_3b0ty"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5tuhn"]
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_max = 15.87
+orbit_velocity_min = -0.88899994
+orbit_velocity_max = 0.6350001
+gravity = Vector3(0, 9.8, 0)
+turbulence_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_2gh4u"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2gh4u"]
+radius = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_devvj"]
+height = 9.0
+radius = 2.5
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_b57fe")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75861406, 0.18512869, 0.36551476)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(-0.31399244, 0, 0.94942546, 0, 1, 0, -0.94942546, 0, -0.31399244, 0, 2.849085, 0)
+environment = SubResource("Environment_r3nvd")
+
+[node name="Fog" type="CSGSphere3D" parent="XROrigin3D/XRCamera3D"]
+material_override = ExtResource("3_sc1dx")
+flip_faces = true
+radius = 0.2
+material = ExtResource("3_sc1dx")
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_4tk31")
+
+[node name="Label3D" type="Label3D" parent="XROrigin3D/LeftController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1425657, 0)
+visible = false
+pixel_size = 0.0003
+text = "CONSOLE
+Multiline
+"
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+mesh = SubResource("BoxMesh_4tk31")
+skeleton = NodePath("../../LeftController")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -96.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Enter VR"
+
+[node name="rocks-a2" parent="." instance=ExtResource("4_trn2v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5840745, 0, -3.2177808)
+
+[node name="barrel2" parent="rocks-a2" instance=ExtResource("3_lgr22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.007586, 1.6632526, 0.5728278)
+
+[node name="Fish5" parent="rocks-a2/barrel2" instance=ExtResource("10_wkp8b")]
+transform = Transform3D(0.04757972, 0, 0.015367831, 0, 0.05, 0, -0.015367831, 0, 0.04757972, 0, 1.35, 0)
+script = ExtResource("10_5vvyt")
+
+[node name="Spinner" type="Node3D" parent="rocks-a2/barrel2"]
+script = ExtResource("4_5vvyt")
+
+[node name="Fish3" parent="rocks-a2/barrel2/Spinner" instance=ExtResource("10_wkp8b")]
+transform = Transform3D(0.04362866, 0, 0.19518335, 0, 0.2, 0, -0.19518335, 0, 0.04362866, 0, 1.5599103, 0.87710595)
+script = ExtResource("10_5vvyt")
+
+[node name="Fish4" parent="rocks-a2/barrel2/Spinner" instance=ExtResource("10_wkp8b")]
+transform = Transform3D(-0.038504403, 0, -0.19625853, 0, 0.2, 0, 0.19625853, 0, -0.038504403, 0, 1.5599103, -0.95203996)
+script = ExtResource("10_5vvyt")
+
+[node name="Seaweed" type="GPUParticles3D" parent="rocks-a2/barrel2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4969277, 0)
+amount = 1
+lifetime = 0.1
+process_material = ExtResource("8_kjvhd")
+draw_pass_1 = SubResource("QuadMesh_devvj")
+draw_skin = SubResource("Skin_3b0ty")
+
+[node name="Bubbles" type="GPUParticles3D" parent="rocks-a2/barrel2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4969277, 0)
+process_material = SubResource("ParticleProcessMaterial_5tuhn")
+draw_pass_1 = SubResource("SphereMesh_2gh4u")
+draw_skin = SubResource("Skin_3b0ty")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="rocks-a2/barrel2/Bubbles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.745, -1.4969277, 2.7710066)
+stream = ExtResource("10_2gh4u")
+volume_db = -45.049
+autoplay = true
+
+[node name="rocks-b2" parent="." instance=ExtResource("5_03owx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2839327, -4.7683716e-07, -4.847538)
+
+[node name="rocks-c2" parent="." instance=ExtResource("6_wkp8b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.9089956, 0, -0.53032684)
+
+[node name="rocks-sand-a2" parent="." instance=ExtResource("7_lgr22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3210268, 0, 2.076891)
+
+[node name="Tank" type="CSGSphere3D" parent="rocks-sand-a2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0065176487, 4.508562, -0.0004477501)
+material_override = ExtResource("3_sc1dx")
+radius = 2.0
+
+[node name="FishCharacterBody3D" type="CharacterBody3D" parent="rocks-sand-a2/Tank"]
+transform = Transform3D(0.041469328, 0, 0.09099613, 0, 0.1, 0, -0.09099613, 0, 0.041469328, 0.3481953, -0.13287687, 0.12548876)
+motion_mode = 1
+script = ExtResource("14_devvj")
+move_speed = 30
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rocks-sand-a2/Tank/FishCharacterBody3D"]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0)
+shape = SubResource("SphereShape3D_2gh4u")
+
+[node name="Fish" parent="rocks-sand-a2/Tank/FishCharacterBody3D/CollisionShape3D" instance=ExtResource("14_2gh4u")]
+transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, 0.4467678, 0, 0.98034096)
+script = ExtResource("10_5vvyt")
+
+[node name="FishFlockCharacterBody3D" type="CharacterBody3D" parent="rocks-sand-a2/Tank"]
+transform = Transform3D(0.1, 0, 0, 0, 0.099999994, 0, 0, 0, 0.1, -0.26899338, -0.14616442, 2.3028216)
+motion_mode = 1
+script = ExtResource("15_devvj")
+move_speed = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rocks-sand-a2/Tank/FishFlockCharacterBody3D"]
+transform = Transform3D(0.9999657, 0, 0, 0, 0.9999995, 0, 0, 0, 0.9999657, 0, 0, 0)
+shape = SubResource("CylinderShape3D_devvj")
+
+[node name="Fish" parent="rocks-sand-a2/Tank/FishFlockCharacterBody3D/CollisionShape3D" instance=ExtResource("14_2gh4u")]
+transform = Transform3D(-1.0000001, 8.74228e-08, 0, 7.1054274e-15, 1.19248815e-08, 1.0000001, 8.742278e-08, 1.0000002, -1.1924881e-08, 0, 0.818, 0)
+script = ExtResource("10_5vvyt")
+
+[node name="FishFlockCharacterBody3D2" type="CharacterBody3D" parent="rocks-sand-a2/Tank"]
+transform = Transform3D(0.1, 0, 0, 0, 0.099999994, 0, 0, 0, 0.1, -2.120311, -0.14616442, 2.3028216)
+motion_mode = 1
+script = ExtResource("15_devvj")
+move_speed = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rocks-sand-a2/Tank/FishFlockCharacterBody3D2"]
+transform = Transform3D(-0.9999657, 8.7422734e-08, -1.0424704e-15, 0, 1.1924875e-08, 0.9999657, 8.741978e-08, 0.9999995, -1.1924472e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_devvj")
+
+[node name="Fish" parent="rocks-sand-a2/Tank/FishFlockCharacterBody3D2/CollisionShape3D" instance=ExtResource("14_2gh4u")]
+transform = Transform3D(-1.0000001, 8.74228e-08, 0, 7.1054274e-15, 1.19248815e-08, 1.0000001, 8.742278e-08, 1.0000002, -1.1924881e-08, 0, 0.818, 0)
+script = ExtResource("10_5vvyt")
+
+[node name="FishFlockCharacterBody3D3" type="CharacterBody3D" parent="rocks-sand-a2/Tank"]
+transform = Transform3D(0.1, 0, 0, 0, 0.099999994, 0, 0, 0, 0.1, 0.8632686, -0.14616442, 2.3028216)
+motion_mode = 1
+script = ExtResource("15_devvj")
+move_speed = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rocks-sand-a2/Tank/FishFlockCharacterBody3D3"]
+transform = Transform3D(-0.9999657, 0, 8.741978e-08, 0, 0.9999995, 0, -8.741978e-08, 0, -0.9999657, 0, 0, 0)
+shape = SubResource("CylinderShape3D_devvj")
+
+[node name="Fish" parent="rocks-sand-a2/Tank/FishFlockCharacterBody3D3/CollisionShape3D" instance=ExtResource("14_2gh4u")]
+transform = Transform3D(-1.0000001, 8.74228e-08, -1.0425062e-15, 0, 1.1924883e-08, 1.0000001, 8.7422784e-08, 1.0000002, -1.1924882e-08, 0, 0.8183899, 0)
+script = ExtResource("10_5vvyt")
+
+[node name="Sand" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75117016, 0)
+material_override = ExtResource("13_j4qnp")
+size = Vector3(100, 1.5, 100)
+
+[node name="Waterbox" type="CSGSphere3D" parent="."]
+material_override = ExtResource("14_fpfj3")
+flip_faces = true
+radius = 32.538
+
+[node name="Fog" type="CSGSphere3D" parent="Waterbox"]
+material_override = ExtResource("15_sc1dx")
+flip_faces = true
+radius = 15.0
+
+[node name="OutsideSpinner" type="Node3D" parent="Waterbox"]
+script = ExtResource("4_5vvyt")
+rotation_speed = -0.4
+
+[node name="Manta ray" parent="Waterbox/OutsideSpinner" instance=ExtResource("15_fpfj3")]
+transform = Transform3D(0.087155804, 0, 0.9961947, 0, 1, 0, -0.9961947, 0, 0.087155804, 3.9394321, 7.345052, -8.586803)
+script = ExtResource("10_5vvyt")
+
+[node name="Whale2" parent="Waterbox/OutsideSpinner/Manta ray" instance=ExtResource("10_20pc6")]
+transform = Transform3D(-0.9835474, 0, 0.18051508, 0, 0.999975, 0, -0.18051484, 0, -0.9835485, -18.596144, 0, -4.7076855)
+script = ExtResource("10_5vvyt")

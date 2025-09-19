@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cojqp74h68g3x"]
+
+[ext_resource type="PackedScene" uid="uid://bj7t5o801xc8v" path="res://models/Whale.fbx" id="1_ua5ne"]
+
+[node name="Whale" instance=ExtResource("1_ua5ne")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(-0.7273683, -5.8792946e-18, 5.9825404e-18, 0.68624735)
+bones/2/rotation = Quaternion(0.020183876, -0.00015875662, 0.0030221762, 0.99979174)
+bones/3/rotation = Quaternion(-0.03864674, 0.00021454963, -0.0030187294, 0.9992484)
+bones/4/rotation = Quaternion(-0.053314224, -6.35072e-11, 7.6057765e-09, 0.9985778)
+bones/5/rotation = Quaternion(0.026048925, 2.520369e-10, -7.698316e-09, 0.99966073)
+bones/7/rotation = Quaternion(-0.37983134, -0.0023490873, -0.26989082, 0.884806)
+bones/9/rotation = Quaternion(0.03963181, -0.0006331069, 0.09812818, 0.9943841)
+bones/11/rotation = Quaternion(-0.35940132, 0.0073620635, 0.34934247, 0.8652955)
+bones/13/rotation = Quaternion(-0.023761896, -0.0031274615, -0.19339404, 0.9808284)
+bones/15/rotation = Quaternion(0.673733, 1.2333186e-06, 1.1244321e-06, 0.73897487)
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "Armature|Swim"
