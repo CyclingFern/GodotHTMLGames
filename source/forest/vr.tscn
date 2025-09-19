@@ -1,7 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3yuvlks3wbp7"]
+[gd_scene load_steps=22 format=3 uid="uid://b3yuvlks3wbp7"]
 
 [ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
 [ext_resource type="PackedScene" uid="uid://bwdg76oi4dyfo" path="res://survival-kit/models/campfire-pit.glb" id="2_6u44e"]
+[ext_resource type="AudioStream" uid="uid://dcvj2v6r8tsh5" path="res://sounds/amb_bird_1.ogg" id="2_smwd4"]
+[ext_resource type="Script" uid="uid://omj5j1aosi1p" path="res://scripts/bird_chirp.gd" id="3_0ym0d"]
 [ext_resource type="PackedScene" uid="uid://c635l2k6f6yqm" path="res://survival-kit/models/tree-log-small.glb" id="3_80de6"]
 [ext_resource type="PackedScene" uid="uid://itcmhvi1mceb" path="res://survival-kit/models/tree-tall.glb" id="4_lwrbq"]
 [ext_resource type="PackedScene" uid="uid://drpy7u5ivv44e" path="res://survival-kit/models/tree-trunk.glb" id="5_i3gxp"]
@@ -40,6 +42,28 @@ material = SubResource("StandardMaterial3D_dmba7")
 size = Vector2(50, 50)
 center_offset = Vector3(0, -0.01, 0)
 
+[sub_resource type="SphereMesh" id="SphereMesh_smwd4"]
+flip_faces = true
+radius = 10.0
+height = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ym0d"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 0.019607844, 0.8117647)
+emission_enabled = true
+emission = Color(0.41406584, 0.41406578, 0.41406578, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cyr28"]
+flip_faces = true
+radius = 2.0
+height = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f6w0g"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0.4392157, 1, 0.49411765)
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_ncpny")
 
@@ -74,24 +98,54 @@ text = "Enter VR"
 [node name="Painting" type="Node3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 
-[node name="campfire-pit" parent="Painting" instance=ExtResource("2_6u44e")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Painting"]
+transform = Transform3D(0.2, 0, 0, 0, -0.008723885, 0.19980966, 0, -0.19980966, -0.008723885, 0, 1.7451181, 0.5849518)
+light_energy = 0.1
 
-[node name="FireLight" type="OmniLight3D" parent="Painting/campfire-pit"]
+[node name="BirdChirp" type="AudioStreamPlayer3D" parent="Painting"]
+transform = Transform3D(-0.005455208, 0, 0.19992559, 0, 0.2, 0, -0.19992559, 0, -0.005455208, 1.4145037, 0, 0.7436099)
+stream = ExtResource("2_smwd4")
+script = ExtResource("3_0ym0d")
+
+[node name="camp" type="Node3D" parent="Painting"]
+
+[node name="tree-log-small2" parent="Painting/camp" instance=ExtResource("3_80de6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52664685, 0, 0.0060554743)
+
+[node name="campfire-pit" parent="Painting/camp" instance=ExtResource("2_6u44e")]
+transform = Transform3D(-4.3711392e-08, 0, 1, 0, 1, 0, -1, 0, -4.3711392e-08, 0, 0, 0)
+
+[node name="FireLight" type="OmniLight3D" parent="Painting/camp/campfire-pit"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.17665355, 0)
 light_size = 50.0
 
-[node name="FireParticles" type="GPUParticles3D" parent="Painting/campfire-pit/FireLight"]
+[node name="FireParticles" type="GPUParticles3D" parent="Painting/camp/campfire-pit/FireLight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.48267412, 0)
 process_material = SubResource("ParticleProcessMaterial_jqvlu")
 draw_pass_1 = SubResource("PrismMesh_i3gxp")
 
-[node name="Ground" type="MeshInstance3D" parent="Painting"]
-mesh = SubResource("PlaneMesh_80w17")
-skeleton = NodePath("../..")
+[node name="grass" type="Node3D" parent="Painting"]
 
-[node name="tree-log-small2" parent="Painting" instance=ExtResource("3_80de6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52664685, 0, 0.0060554743)
+[node name="grass-large2" parent="Painting/grass" instance=ExtResource("7_80w17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0883693, 0, 0.59932864)
+
+[node name="grass2" parent="Painting/grass" instance=ExtResource("8_ifwaa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3492533, 0, -0.40889692)
+
+[node name="patch-grass-large2" parent="Painting/grass" instance=ExtResource("9_smwd4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6329972, 0, -1.1036245)
+
+[node name="patch-grass-large3" parent="Painting/grass" instance=ExtResource("9_smwd4")]
+transform = Transform3D(-0.08182812, 0, 2.998884, 0, 3.0000005, 0, -2.998884, 0, -0.08182812, 1.4145037, 0, 0.7436099)
+
+[node name="patch-grass-large4" parent="Painting/grass" instance=ExtResource("9_smwd4")]
+transform = Transform3D(2.286921, 0, 1.9416469, 0, 3, 0, -1.9416469, 0, 2.286921, 0.52151513, 0, 2.0439756)
+
+[node name="patch-grass-large5" parent="Painting/grass" instance=ExtResource("9_smwd4")]
+transform = Transform3D(2.2604837, 0, -1.9723625, 0, 3, 0, 1.9723625, 0, 2.2604837, -1.8998657, 0, 1.2584958)
+
+[node name="patch-grass-large6" parent="Painting/grass" instance=ExtResource("9_smwd4")]
+transform = Transform3D(-1.8728255, 0, -2.3436136, 0, 3, 0, 2.3436136, 0, -1.8728255, -0.6329469, -2.3841858e-07, -1.5349565)
 
 [node name="Forest" type="Node3D" parent="Painting"]
 
@@ -358,294 +412,281 @@ transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9
 [node name="tree10" parent="Painting/Forest/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 4.425861, 0, -1.9823976)
 
-[node name="Forest2" type="Node3D" parent="Painting"]
+[node name="Forest2" type="Node3D" parent="Painting/Forest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.063923, 0, 0)
 
-[node name="Forrest" type="Node3D" parent="Painting/Forest2"]
+[node name="Forrest" type="Node3D" parent="Painting/Forest/Forest2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.501113, 0, -6.510915)
 
-[node name="tree-tall2" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall2" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 1.027409)
 
-[node name="tree-tall3" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall3" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 2.069044)
 
-[node name="tree-tall4" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall4" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.389992, 0, 2.069044)
 
-[node name="tree-trunk2" parent="Painting/Forest2/Forrest" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk2" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0907036, 0, 0.6030106)
 
-[node name="tree2" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree2" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5641649, 0, -1.0316466)
 
-[node name="tree3" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree3" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.359568, 0, -0.0660277)
 
-[node name="tree4" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree4" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 0.7248497, 0, -2.4794116)
 
-[node name="tree-tall5" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall5" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 0.43288362)
 
-[node name="tree-tall6" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall6" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 1.4745188)
 
-[node name="tree-tall7" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall7" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8777726, 0, 1.4745188)
 
-[node name="tree-trunk3" parent="Painting/Forest2/Forrest" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk3" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.578484, 0, 0.008485258)
 
-[node name="tree5" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree5" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0519454, 0, -1.626172)
 
-[node name="tree6" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree6" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 3.8473487, 0, -0.66055304)
 
-[node name="tree7" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree7" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.2126303, 0, -3.073937)
 
-[node name="tree-tall8" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall8" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 1.524423)
 
-[node name="tree-tall9" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall9" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 2.5660582)
 
-[node name="tree-tall10" parent="Painting/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall10" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0910034, 0, 2.5660582)
 
-[node name="tree-trunk4" parent="Painting/Forest2/Forrest" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk4" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7917147, 0, 1.1000247)
 
-[node name="tree8" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree8" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.265176, 0, -0.53463256)
 
-[node name="tree9" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree9" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 6.0605793, 0, 0.43098634)
 
-[node name="tree10" parent="Painting/Forest2/Forrest" instance=ExtResource("6_dmba7")]
+[node name="tree10" parent="Painting/Forest/Forest2/Forrest" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 4.425861, 0, -1.9823976)
 
-[node name="Forrest2" type="Node3D" parent="Painting/Forest2"]
+[node name="Forrest2" type="Node3D" parent="Painting/Forest/Forest2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.183733, 0, 7.0805826)
 
-[node name="tree-tall2" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall2" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 1.027409)
 
-[node name="tree-tall3" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall3" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 2.069044)
 
-[node name="tree-tall4" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall4" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.389992, 0, 2.069044)
 
-[node name="tree-trunk2" parent="Painting/Forest2/Forrest2" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk2" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0907036, 0, 0.6030106)
 
-[node name="tree2" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree2" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5641649, 0, -1.0316466)
 
-[node name="tree3" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree3" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.359568, 0, -0.0660277)
 
-[node name="tree4" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree4" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 0.7248497, 0, -2.4794116)
 
-[node name="tree-tall5" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall5" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 0.43288362)
 
-[node name="tree-tall6" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall6" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 1.4745188)
 
-[node name="tree-tall7" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall7" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8777726, 0, 1.4745188)
 
-[node name="tree-trunk3" parent="Painting/Forest2/Forrest2" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk3" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.578484, 0, 0.008485258)
 
-[node name="tree5" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree5" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0519454, 0, -1.626172)
 
-[node name="tree6" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree6" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 3.8473487, 0, -0.66055304)
 
-[node name="tree7" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree7" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.2126303, 0, -3.073937)
 
-[node name="tree-tall8" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall8" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 1.524423)
 
-[node name="tree-tall9" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall9" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 2.5660582)
 
-[node name="tree-tall10" parent="Painting/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall10" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0910034, 0, 2.5660582)
 
-[node name="tree-trunk4" parent="Painting/Forest2/Forrest2" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk4" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7917147, 0, 1.1000247)
 
-[node name="tree8" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree8" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.265176, 0, -0.53463256)
 
-[node name="tree9" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree9" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 6.0605793, 0, 0.43098634)
 
-[node name="tree10" parent="Painting/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
+[node name="tree10" parent="Painting/Forest/Forest2/Forrest2" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 4.425861, 0, -1.9823976)
 
-[node name="Forrest3" type="Node3D" parent="Painting/Forest2"]
+[node name="Forrest3" type="Node3D" parent="Painting/Forest/Forest2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.167664, 0, -10.028426)
 
-[node name="tree-tall2" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall2" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 1.027409)
 
-[node name="tree-tall3" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall3" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 2.069044)
 
-[node name="tree-tall4" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall4" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.389992, 0, 2.069044)
 
-[node name="tree-trunk2" parent="Painting/Forest2/Forrest3" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk2" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0907036, 0, 0.6030106)
 
-[node name="tree2" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree2" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5641649, 0, -1.0316466)
 
-[node name="tree3" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree3" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.359568, 0, -0.0660277)
 
-[node name="tree4" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree4" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 0.7248497, 0, -2.4794116)
 
-[node name="tree-tall5" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall5" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 0.43288362)
 
-[node name="tree-tall6" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall6" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 1.4745188)
 
-[node name="tree-tall7" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall7" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8777726, 0, 1.4745188)
 
-[node name="tree-trunk3" parent="Painting/Forest2/Forrest3" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk3" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.578484, 0, 0.008485258)
 
-[node name="tree5" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree5" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0519454, 0, -1.626172)
 
-[node name="tree6" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree6" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 3.8473487, 0, -0.66055304)
 
-[node name="tree7" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree7" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.2126303, 0, -3.073937)
 
-[node name="tree-tall8" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall8" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 1.524423)
 
-[node name="tree-tall9" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall9" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 2.5660582)
 
-[node name="tree-tall10" parent="Painting/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall10" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0910034, 0, 2.5660582)
 
-[node name="tree-trunk4" parent="Painting/Forest2/Forrest3" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk4" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7917147, 0, 1.1000247)
 
-[node name="tree8" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree8" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.265176, 0, -0.53463256)
 
-[node name="tree9" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree9" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 6.0605793, 0, 0.43098634)
 
-[node name="tree10" parent="Painting/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
+[node name="tree10" parent="Painting/Forest/Forest2/Forrest3" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 4.425861, 0, -1.9823976)
 
-[node name="Forrest4" type="Node3D" parent="Painting/Forest2"]
+[node name="Forrest4" type="Node3D" parent="Painting/Forest/Forest2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.474543, 0, 0.21159601)
 
-[node name="tree-tall2" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall2" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 1.027409)
 
-[node name="tree-tall3" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall3" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7052457, 0, 2.069044)
 
-[node name="tree-tall4" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall4" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.389992, 0, 2.069044)
 
-[node name="tree-trunk2" parent="Painting/Forest2/Forrest4" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk2" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0907036, 0, 0.6030106)
 
-[node name="tree2" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree2" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5641649, 0, -1.0316466)
 
-[node name="tree3" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree3" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.359568, 0, -0.0660277)
 
-[node name="tree4" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree4" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 0.7248497, 0, -2.4794116)
 
-[node name="tree-tall5" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall5" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 0.43288362)
 
-[node name="tree-tall6" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall6" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1930263, 0, 1.4745188)
 
-[node name="tree-tall7" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall7" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8777726, 0, 1.4745188)
 
-[node name="tree-trunk3" parent="Painting/Forest2/Forrest4" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk3" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.578484, 0, 0.008485258)
 
-[node name="tree5" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree5" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0519454, 0, -1.626172)
 
-[node name="tree6" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree6" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 3.8473487, 0, -0.66055304)
 
-[node name="tree7" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree7" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 2.2126303, 0, -3.073937)
 
-[node name="tree-tall8" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall8" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 1.524423)
 
-[node name="tree-tall9" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall9" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4062567, 0, 2.5660582)
 
-[node name="tree-tall10" parent="Painting/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
+[node name="tree-tall10" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("4_lwrbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0910034, 0, 2.5660582)
 
-[node name="tree-trunk4" parent="Painting/Forest2/Forrest4" instance=ExtResource("5_i3gxp")]
+[node name="tree-trunk4" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("5_i3gxp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7917147, 0, 1.1000247)
 
-[node name="tree8" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree8" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.265176, 0, -0.53463256)
 
-[node name="tree9" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree9" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 6.0605793, 0, 0.43098634)
 
-[node name="tree10" parent="Painting/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
+[node name="tree10" parent="Painting/Forest/Forest2/Forrest4" instance=ExtResource("6_dmba7")]
 transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9998725, 4.425861, 0, -1.9823976)
 
-[node name="grass-large2" parent="Painting" instance=ExtResource("7_80w17")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0883691, 0, 0.59932864)
+[node name="Ground" type="MeshInstance3D" parent="Painting"]
+mesh = SubResource("PlaneMesh_80w17")
+skeleton = NodePath("../..")
 
-[node name="grass2" parent="Painting" instance=ExtResource("8_ifwaa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3492533, 0, -0.40889692)
+[node name="SkySun" type="CSGMesh3D" parent="Painting"]
+mesh = SubResource("SphereMesh_smwd4")
+material = SubResource("StandardMaterial3D_0ym0d")
 
-[node name="patch-grass-large2" parent="Painting" instance=ExtResource("9_smwd4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.632997, 0, -1.1036245)
-
-[node name="patch-grass-large3" parent="Painting" instance=ExtResource("9_smwd4")]
-transform = Transform3D(-0.08182812, 0, 2.9988837, 0, 3.0000005, 0, -2.9988837, 0, -0.08182812, 1.4145037, 0, 0.7436099)
-
-[node name="patch-grass-large4" parent="Painting" instance=ExtResource("9_smwd4")]
-transform = Transform3D(2.286921, 0, 1.941647, 0, 3, 0, -1.941647, 0, 2.286921, 0.52151513, 0, 2.0439756)
-
-[node name="patch-grass-large5" parent="Painting" instance=ExtResource("9_smwd4")]
-transform = Transform3D(2.2604837, 0, -1.9723625, 0, 3, 0, 1.9723625, 0, 2.2604837, -1.8998656, 0, 1.2584958)
-
-[node name="patch-grass-large6" parent="Painting" instance=ExtResource("9_smwd4")]
-transform = Transform3D(-1.8728254, 0, -2.3436136, 0, 3, 0, 2.3436136, 0, -1.8728254, -0.63294685, -2.3841858e-07, -1.5349565)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Painting"]
-transform = Transform3D(0.2, 0, 0, 0, -0.008723885, 0.19980966, 0, -0.19980966, -0.008723885, 0, 1.7451181, 0.5849518)
-light_energy = 0.1
+[node name="SkySun2" type="CSGMesh3D" parent="Painting"]
+mesh = SubResource("SphereMesh_cyr28")
+material = SubResource("StandardMaterial3D_f6w0g")
