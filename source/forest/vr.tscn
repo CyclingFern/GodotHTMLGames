@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b3yuvlks3wbp7"]
+[gd_scene load_steps=20 format=3 uid="uid://b3yuvlks3wbp7"]
 
 [ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
 [ext_resource type="PackedScene" uid="uid://bwdg76oi4dyfo" path="res://survival-kit/models/campfire-pit.glb" id="2_6u44e"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d1ko1jpgsfo5" path="res://survival-kit/models/grass-large.glb" id="7_80w17"]
 [ext_resource type="PackedScene" uid="uid://bsukfwmlistfs" path="res://survival-kit/models/grass.glb" id="8_ifwaa"]
 [ext_resource type="PackedScene" uid="uid://b3q2lymn2bd5" path="res://survival-kit/models/patch-grass-large.glb" id="9_smwd4"]
+[ext_resource type="Material" uid="uid://cvdv0udiit0nx" path="res://materials/fogtres.tres" id="13_f6w0g"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ncpny"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -42,27 +43,13 @@ material = SubResource("StandardMaterial3D_dmba7")
 size = Vector2(50, 50)
 center_offset = Vector3(0, -0.01, 0)
 
-[sub_resource type="SphereMesh" id="SphereMesh_smwd4"]
+[sub_resource type="SphereMesh" id="SphereMesh_0ym0d"]
+lightmap_size_hint = Vector2i(159, 159)
+material = ExtResource("13_f6w0g")
 flip_faces = true
-radius = 10.0
-height = 10.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ym0d"]
-transparency = 1
-cull_mode = 2
-albedo_color = Color(1, 1, 0.019607844, 0.8117647)
-emission_enabled = true
-emission = Color(0.41406584, 0.41406578, 0.41406578, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_cyr28"]
-flip_faces = true
-radius = 2.0
-height = 4.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f6w0g"]
-transparency = 1
-cull_mode = 2
-albedo_color = Color(1, 0.4392157, 1, 0.49411765)
+radius = 5.0
+height = 5.0
+is_hemisphere = true
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_ncpny")
@@ -95,12 +82,16 @@ offset_right = 452.0
 offset_bottom = 154.0
 text = "Enter VR"
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.043619424, 0.9990483, 0, -0.9990483, -0.043619424, 0, 28.099297, 2.9247591)
+light_energy = 0.1
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 8.408134, 2.9247591)
+light_energy = 0.1
+
 [node name="Painting" type="Node3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Painting"]
-transform = Transform3D(0.2, 0, 0, 0, -0.008723885, 0.19980966, 0, -0.19980966, -0.008723885, 0, 1.7451181, 0.5849518)
-light_energy = 0.1
 
 [node name="BirdChirp" type="AudioStreamPlayer3D" parent="Painting"]
 transform = Transform3D(-0.005455208, 0, 0.19992559, 0, 0.2, 0, -0.19992559, 0, -0.005455208, 1.4145037, 0, 0.7436099)
@@ -683,10 +674,7 @@ transform = Transform3D(0.9998725, 0, 0.015969085, 0, 1, 0, -0.015969085, 0, 0.9
 mesh = SubResource("PlaneMesh_80w17")
 skeleton = NodePath("../..")
 
-[node name="SkySun" type="CSGMesh3D" parent="Painting"]
-mesh = SubResource("SphereMesh_smwd4")
-material = SubResource("StandardMaterial3D_0ym0d")
-
-[node name="SkySun2" type="CSGMesh3D" parent="Painting"]
-mesh = SubResource("SphereMesh_cyr28")
-material = SubResource("StandardMaterial3D_f6w0g")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Painting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("SphereMesh_0ym0d")
+skeleton = NodePath("")
