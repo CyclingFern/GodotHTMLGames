@@ -14,3 +14,6 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# node_modules (if you use npm or yarn for managing JavaScript packages)
+node_modules/
