@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3yuvlks3wbp7"]
+[gd_scene load_steps=11 format=3 uid="uid://b3yuvlks3wbp7"]
 
 [ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
 [ext_resource type="PackedScene" uid="uid://diqwbjhmkv3ku" path="res://fish/Whale.fbx" id="2_6u44e"]
+[ext_resource type="AudioStream" uid="uid://bfoclelpp2xlv" path="res://sound/underwater_exploration.ogg" id="2_lwrbq"]
 [ext_resource type="Script" uid="uid://caow8kkk2y0ql" path="res://fish/whale.gd" id="3_80de6"]
 [ext_resource type="Script" uid="uid://imfjhg41sxtu" path="res://spinner.gd" id="3_jqvlu"]
 [ext_resource type="Material" uid="uid://crpfoqkucqu1q" path="res://materials/divingbelltres.tres" id="4_80de6"]
@@ -59,6 +60,10 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 4
 [node name="Uplight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -3.9649167, 0)
 light_color = Color(0, 1, 1, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_lwrbq")
+autoplay = true
 
 [node name="Painting" type="Node3D" parent="."]
 
