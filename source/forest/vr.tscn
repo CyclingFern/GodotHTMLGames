@@ -42,10 +42,10 @@ center_offset = Vector3(0, -0.01, 0)
 script = ExtResource("1_ncpny")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2706395, 0, 0)
+transform = Transform3D(-0.07955521, 0, -0.9968304, 0, 1, 0, 0.9968304, 0, -0.07955521, -7.6269116, 0, 0)
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
-transform = Transform3D(-0.2783372, 0, -0.96048343, 0, 1, 0, 0.96048343, 0, -0.2783372, 0, 0.20518488, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8296852, 0)
 
 [node name="LeftController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"left_hand"
@@ -70,6 +70,7 @@ offset_bottom = 154.0
 text = "Enter VR"
 
 [node name="Painting" type="Node3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
 [node name="campfire-pit" parent="Painting" instance=ExtResource("2_6u44e")]
 
