@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3yuvlks3wbp7"]
+
+[ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncpny"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ncpny")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_ncpny")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+mesh = SubResource("BoxMesh_ncpny")
+skeleton = NodePath("../../LeftController")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 452.0
+offset_bottom = 154.0
+text = "Enter VR"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56839955, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.812506)
