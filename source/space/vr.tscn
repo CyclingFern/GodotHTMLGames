@@ -1,0 +1,156 @@
+[gd_scene load_steps=18 format=3 uid="uid://b3yuvlks3wbp7"]
+
+[ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
+[ext_resource type="PackedScene" uid="uid://dml8s4ex3ae0k" path="res://models/hangar_roundGlass.glb" id="2_dmba7"]
+[ext_resource type="PackedScene" uid="uid://c8t07sbwx7pux" path="res://models/alien_2.tscn" id="2_jqvlu"]
+[ext_resource type="PackedScene" uid="uid://bv1w8dpyfof5n" path="res://models/astronaut_a_2.tscn" id="3_lwrbq"]
+[ext_resource type="PackedScene" uid="uid://codj4jrd5for0" path="res://models/astronaut_b.tscn" id="4_i3gxp"]
+[ext_resource type="PackedScene" uid="uid://bdxruaxyqpp0d" path="res://models/craft_miner_2.tscn" id="5_dmba7"]
+[ext_resource type="PackedScene" uid="uid://cnlg5wvu773ob" path="res://models/monorail_train_passenger_2.tscn" id="6_80w17"]
+[ext_resource type="Script" uid="uid://c1tihj1ish0bp" path="res://scripts/sine_bob.gd" id="7_ifwaa"]
+[ext_resource type="PackedScene" uid="uid://b3x1jwm5gdt4w" path="res://models/craft_cargo_b_2.tscn" id="9_80w17"]
+[ext_resource type="AudioStream" uid="uid://djgj3qxbu4eay" path="res://sounds/ville_seppanen-1_g.ogg" id="9_ifwaa"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncpny"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_80w17"]
+lifetime_randomness = 0.16
+emission_shape = 1
+emission_sphere_radius = 0.5
+angle_min = -720.0
+angle_max = 720.0
+initial_velocity_min = 0.099999994
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80w17"]
+transparency = 1
+blend_mode = 1
+emission_enabled = true
+emission = Color(0, 1, 1, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ifwaa"]
+material = SubResource("StandardMaterial3D_80w17")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_80w17"]
+size = Vector2(50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifwaa"]
+albedo_color = Color(0.6583434, 0.9999997, 0.9955103, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_smwd4"]
+material = SubResource("StandardMaterial3D_ifwaa")
+flip_faces = true
+radius = 25.0
+height = 50.0
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ncpny")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.88343877, -8.630214e-08, 0.46854672, -0.40130246, -0.51617473, 0.75665057, 0.2418519, -0.85648334, -0.4560088, 1.4714928, 2.2957659, 0)
+light_energy = 0.5
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+transform = Transform3D(-0.975427, 0, 0.22032288, 0, 1, 0, -0.22032288, 0, -0.975427, -0.44642115, 0, -2.9178689)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_ncpny")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+mesh = SubResource("BoxMesh_ncpny")
+skeleton = NodePath("../../LeftController")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 452.0
+offset_bottom = 154.0
+text = "Enter VR"
+
+[node name="Painting" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="hangar_roundGlass2" parent="Painting" instance=ExtResource("2_dmba7")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -13.910193, -0.0035420419, 3.7269685)
+
+[node name="alien2" parent="Painting" instance=ExtResource("2_jqvlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16639419, 0, 0.74256676)
+
+[node name="Label3D" type="Label3D" parent="Painting/alien2"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.95174897, 0)
+text = "Trust that guy."
+
+[node name="astronautA2" parent="Painting" instance=ExtResource("3_lwrbq")]
+transform = Transform3D(0.98824704, 0, -0.15286511, 0, 1, 0, 0.15286511, 0, 0.98824704, -1.0072682, 0, 0.71407217)
+
+[node name="Label3D2" type="Label3D" parent="Painting/astronautA2"]
+transform = Transform3D(-1, 0, -8.7422784e-08, 0, 1, 0, 8.7422784e-08, 0, -1, 0, 1.1286442, 0)
+text = "I can shoot
+the gap!"
+
+[node name="astronautB" parent="Painting" instance=ExtResource("4_i3gxp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+
+[node name="craft_miner2" parent="Painting" instance=ExtResource("5_dmba7")]
+transform = Transform3D(0.8251234, 0, 0.5649526, 0, 1, 0, -0.5649526, 0, 0.8251234, -1.3569546, 0.57804054, 1.7689793)
+script = ExtResource("7_ifwaa")
+frequency = 1.0
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="Painting/craft_miner2"]
+transform = Transform3D(1, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1, -0.5469823, 0.35374475, 1.2517811)
+lifetime = 0.5
+preprocess = 1.51
+process_material = SubResource("ParticleProcessMaterial_80w17")
+draw_pass_1 = SubResource("SphereMesh_ifwaa")
+
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="Painting/craft_miner2"]
+transform = Transform3D(1, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1, 0.299814, 0.14039618, 1.3079101)
+lifetime = 0.5
+preprocess = 1.51
+process_material = SubResource("ParticleProcessMaterial_80w17")
+draw_pass_1 = SubResource("SphereMesh_ifwaa")
+
+[node name="monorail_trainPassenger2" parent="Painting/craft_miner2" instance=ExtResource("6_80w17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.034103513, 1.1920929e-07, -1.0689793)
+script = ExtResource("7_ifwaa")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Painting/craft_miner2/monorail_trainPassenger2"]
+transform = Transform3D(1, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1, 0, 0.35374463, 0)
+lifetime = 0.5
+preprocess = 1.51
+process_material = SubResource("ParticleProcessMaterial_80w17")
+draw_pass_1 = SubResource("SphereMesh_ifwaa")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Painting/craft_miner2/monorail_trainPassenger2/GPUParticles3D"]
+stream = ExtResource("9_ifwaa")
+autoplay = true
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="Painting/craft_miner2"]
+transform = Transform3D(1, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1, -0.016017675, 1.1920929e-07, -1.0565963)
+strength = 10.0
+
+[node name="craft_cargoB2" parent="Painting" instance=ExtResource("9_80w17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11313134, 0, -3.4680457)
+
+[node name="Ground" type="MeshInstance3D" parent="Painting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("PlaneMesh_80w17")
+
+[node name="Sky" type="MeshInstance3D" parent="Painting"]
+mesh = SubResource("SphereMesh_smwd4")

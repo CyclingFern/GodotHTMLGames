@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnlg5wvu773ob"]
+
+[ext_resource type="PackedScene" uid="uid://dhi8ne6rnfoga" path="res://models/source/monorail_trainPassenger.glb" id="1_qgid5"]
+
+[node name="monorail_trainPassenger2" instance=ExtResource("1_qgid5")]
+
+[node name="monorail_trainPassenger" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
