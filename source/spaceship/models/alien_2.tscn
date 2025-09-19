@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8t07sbwx7pux"]
+
+[ext_resource type="PackedScene" uid="uid://cpp4kj3j041x2" path="res://models/source/alien.glb" id="1_qlewi"]
+
+[node name="alien2" instance=ExtResource("1_qlewi")]
+
+[node name="alien" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

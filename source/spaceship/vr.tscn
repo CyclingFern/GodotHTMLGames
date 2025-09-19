@@ -1,0 +1,160 @@
+[gd_scene load_steps=17 format=3 uid="uid://b3yuvlks3wbp7"]
+
+[ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
+[ext_resource type="PackedScene" uid="uid://c8t07sbwx7pux" path="res://models/alien_2.tscn" id="2_jqvlu"]
+[ext_resource type="PackedScene" uid="uid://bv1w8dpyfof5n" path="res://models/astronaut_a_2.tscn" id="3_lwrbq"]
+[ext_resource type="PackedScene" uid="uid://codj4jrd5for0" path="res://models/astronaut_b.tscn" id="4_i3gxp"]
+[ext_resource type="PackedScene" uid="uid://bdxruaxyqpp0d" path="res://models/craft_miner_2.tscn" id="5_dmba7"]
+[ext_resource type="Script" uid="uid://c1tihj1ish0bp" path="res://scripts/sine_bob.gd" id="7_ifwaa"]
+[ext_resource type="PackedScene" uid="uid://fuf3u8c4lgf" path="res://models/source/corridor_end.glb" id="9_80w17"]
+[ext_resource type="AudioStream" uid="uid://djgj3qxbu4eay" path="res://sounds/ville_seppanen-1_g.ogg" id="9_ifwaa"]
+[ext_resource type="PackedScene" uid="uid://b0xsorb8k8gy" path="res://models/corridor_window_2.tscn" id="10_ifwaa"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncpny"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_80w17"]
+lifetime_randomness = 0.16
+emission_shape = 1
+emission_sphere_radius = 0.5
+angle_min = -720.0
+angle_max = 720.0
+initial_velocity_min = 0.099999994
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80w17"]
+transparency = 1
+blend_mode = 1
+emission_enabled = true
+emission = Color(0, 1, 1, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ifwaa"]
+material = SubResource("StandardMaterial3D_80w17")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_80w17"]
+size = Vector2(1.6, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifwaa"]
+albedo_color = Color(0.1336545, 0.03434035, 0.3021527, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_smwd4"]
+material = SubResource("StandardMaterial3D_ifwaa")
+flip_faces = true
+radius = 25.0
+height = 50.0
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ncpny")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.88343877, -8.630214e-08, 0.46854672, -0.40130246, -0.51617473, 0.75665057, 0.2418519, -0.85648334, -0.4560088, 1.4714928, 2.2957659, 0)
+light_energy = 0.5
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.2167505, -0.8564924, 0.46844417, -0.40138662, -0.5156037, -0.7569951, 0.8898921, -0.023948163, -0.45554197, 1.4714928, 2.2957659, 0)
+light_energy = 0.5
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+transform = Transform3D(-0.975427, 0, 0.22032288, 0, 1, 0, -0.22032288, 0, -0.975427, -0.44642115, 0, -2.9178689)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_ncpny")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+mesh = SubResource("BoxMesh_ncpny")
+skeleton = NodePath("../../LeftController")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 452.0
+offset_bottom = 154.0
+text = "Enter VR"
+
+[node name="Painting" type="Node3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="craft_miner2" parent="Painting" instance=ExtResource("5_dmba7")]
+transform = Transform3D(-1.3736881, 1.3660254, -0.49694723, 1.0914044, 0.5176381, -1.5940164, -0.96011376, -1.3660253, -1.1009793, -3.0236213, -0.75529283, 1.435646)
+script = ExtResource("7_ifwaa")
+frequency = 1.0
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="Painting/craft_miner2"]
+transform = Transform3D(1, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1, -0.5469823, 0.35374475, 1.2517811)
+lifetime = 0.5
+preprocess = 1.51
+process_material = SubResource("ParticleProcessMaterial_80w17")
+draw_pass_1 = SubResource("SphereMesh_ifwaa")
+
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="Painting/craft_miner2"]
+transform = Transform3D(1, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1, 0.299814, 0.14039618, 1.3079101)
+lifetime = 0.5
+preprocess = 1.51
+process_material = SubResource("ParticleProcessMaterial_80w17")
+draw_pass_1 = SubResource("SphereMesh_ifwaa")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Painting/craft_miner2"]
+transform = Transform3D(1, 2.9802322e-08, -8.940697e-08, 0, 1.0000001, 8.940697e-08, 2.9802322e-08, -2.9802322e-08, 1, -0.034103513, 0.35374463, -1.0689793)
+lifetime = 0.5
+preprocess = 1.51
+process_material = SubResource("ParticleProcessMaterial_80w17")
+draw_pass_1 = SubResource("SphereMesh_ifwaa")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Painting/craft_miner2/GPUParticles3D"]
+stream = ExtResource("9_ifwaa")
+autoplay = true
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="Painting/craft_miner2"]
+transform = Transform3D(1, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1, -0.016017675, 1.1920929e-07, -1.0565963)
+strength = 10.0
+
+[node name="alien2" parent="Painting" instance=ExtResource("2_jqvlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1663942, 0, 0.07590008)
+
+[node name="Label3D" type="Label3D" parent="Painting/alien2"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.95174897, 0)
+text = "Ooops."
+
+[node name="astronautA2" parent="Painting" instance=ExtResource("3_lwrbq")]
+transform = Transform3D(0.36173844, -7.2722752e-09, -0.93227977, 0.6592214, 0.70710677, 0.25578773, 0.65922135, -0.70710695, 0.2557877, -1.0072682, 0, 0.04740548)
+
+[node name="Label3D2" type="Label3D" parent="Painting/astronautA2"]
+transform = Transform3D(-1, 0, -8.7422784e-08, 0, 1, 0, 8.7422784e-08, 0, -1, 0, 1.1286442, 0)
+text = "Shoot!"
+
+[node name="astronautB" parent="Painting" instance=ExtResource("4_i3gxp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6666667)
+
+[node name="Ground" type="MeshInstance3D" parent="Painting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10000001, 0)
+mesh = SubResource("PlaneMesh_80w17")
+
+[node name="Sky" type="MeshInstance3D" parent="Painting"]
+mesh = SubResource("SphereMesh_smwd4")
+
+[node name="corridor_window2" parent="." instance=ExtResource("10_ifwaa")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0.32510948, 0, -3.0385408)
+
+[node name="corridor_window3" parent="." instance=ExtResource("10_ifwaa")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0.32510948, 0, 0.96145916)
+
+[node name="corridor_end2" parent="." instance=ExtResource("9_80w17")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -7.6, 0, -3)
+
+[node name="corridor_end3" parent="." instance=ExtResource("9_80w17")]
+transform = Transform3D(-4, 0, 3.5762787e-07, 0, 4, 0, -3.5762787e-07, 0, -4, 8.3, 0, 1)

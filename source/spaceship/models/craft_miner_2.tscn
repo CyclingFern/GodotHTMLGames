@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdxruaxyqpp0d"]
+
+[ext_resource type="PackedScene" uid="uid://csjyfau7dryar" path="res://models/source/craft_miner.glb" id="1_p4gj6"]
+
+[node name="craft_miner2" instance=ExtResource("1_p4gj6")]
+
+[node name="craft_miner" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

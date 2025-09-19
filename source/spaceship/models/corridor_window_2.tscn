@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0xsorb8k8gy"]
+
+[ext_resource type="PackedScene" uid="uid://bqthejscxdn2h" path="res://models/source/corridor_window.glb" id="1_bwpnk"]
+
+[node name="corridor_window2" instance=ExtResource("1_bwpnk")]
+
+[node name="corridor_window" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
