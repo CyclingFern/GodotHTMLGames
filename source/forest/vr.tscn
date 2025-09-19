@@ -14,8 +14,10 @@
 size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jqvlu"]
-lifetime_randomness = 1.0
 gravity = Vector3(0, 0.2, 0)
+scale_min = 0.5
+scale_max = 1.5
+turbulence_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwrbq"]
 transparency = 1
@@ -28,7 +30,7 @@ emission_operator = 1
 
 [sub_resource type="PrismMesh" id="PrismMesh_i3gxp"]
 material = SubResource("StandardMaterial3D_lwrbq")
-size = Vector3(0.1, 0.1, 0.1)
+size = Vector3(0.5, 1, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dmba7"]
 albedo_color = Color(0.28563055, 0.15850419, 7.219613e-08, 1)
@@ -70,15 +72,16 @@ offset_bottom = 154.0
 text = "Enter VR"
 
 [node name="Painting" type="Node3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 
 [node name="campfire-pit" parent="Painting" instance=ExtResource("2_6u44e")]
 
 [node name="FireLight" type="OmniLight3D" parent="Painting/campfire-pit"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16559786, 0)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.17665355, 0)
+light_size = 50.0
 
 [node name="FireParticles" type="GPUParticles3D" parent="Painting/campfire-pit/FireLight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07457289, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.48267412, 0)
 process_material = SubResource("ParticleProcessMaterial_jqvlu")
 draw_pass_1 = SubResource("PrismMesh_i3gxp")
 
