@@ -1,0 +1,136 @@
+[gd_scene load_steps=16 format=3 uid="uid://b3yuvlks3wbp7"]
+
+[ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
+[ext_resource type="Material" uid="uid://ckh0o54qtwxxj" path="res://material/ocean.tres" id="2_dmba7"]
+[ext_resource type="Material" uid="uid://bklqdjg6fy8v8" path="res://material/hand.tres" id="2_ysqkv"]
+[ext_resource type="Material" uid="uid://cetkngo7aobbt" path="res://material/airspell.tres" id="3_80de6"]
+[ext_resource type="PackedScene" uid="uid://p65ay2wh1rg8" path="res://models/Whale.fbx" id="4_jqvlu"]
+[ext_resource type="Script" uid="uid://8guht8mcn0k2" path="res://whale.gd" id="5_jqvlu"]
+[ext_resource type="PackedScene" uid="uid://378lpgtddnmh" path="res://models/ship-pirate-small.glb" id="8_ifwaa"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_smwd4"]
+material = ExtResource("2_dmba7")
+flip_faces = true
+radius = 100.0
+height = 100.0
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i3gxp"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+albedo_color = Color(0, 0.69411767, 0.9098039, 1)
+emission_enabled = true
+emission = Color(0, 0.6477042, 0.96123403, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_i3gxp"]
+material = SubResource("StandardMaterial3D_i3gxp")
+flip_faces = true
+radius = 101.0
+height = 200.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ncpny"]
+material = ExtResource("2_ysqkv")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_6u44e"]
+material = ExtResource("2_ysqkv")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_lwrbq"]
+flip_faces = true
+radius = 2.0
+height = 3.0
+is_hemisphere = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dmba7"]
+gravity = Vector3(0, 3, -10)
+
+[sub_resource type="SphereMesh" id="SphereMesh_80w17"]
+material = ExtResource("3_80de6")
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ncpny")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 452.0
+offset_bottom = 154.0
+text = "Enter VR"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.51773787, 0.22236776)
+light_energy = 1.907
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.51773787, 0.22236776)
+light_color = Color(0, 1, 1, 1)
+light_energy = 0.2
+
+[node name="Ocean" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 7.642742e-15, 8.742278e-08, 0, -1, 8.742278e-08, 8.742278e-08, 8.742278e-08, 1, 0, 3, 0)
+material_override = ExtResource("2_dmba7")
+mesh = SubResource("SphereMesh_smwd4")
+skeleton = NodePath("../Whale/XROrigin3D/OmniLight3D")
+
+[node name="Sky" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, 0)
+mesh = SubResource("SphereMesh_i3gxp")
+skeleton = NodePath("../Whale/XROrigin3D/OmniLight3D")
+
+[node name="Whale" parent="." instance=ExtResource("4_jqvlu")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 10, 0, 0)
+script = ExtResource("5_jqvlu")
+rotation_sensitivity = 1.0
+radius = 12.0
+min_radius = 10.0
+max_radius = 60.0
+angular_speed = 0.1
+
+[node name="XROrigin3D" type="XROrigin3D" parent="Whale"]
+transform = Transform3D(-0.33333334, 0, -2.9140926e-08, 0, 0.33333334, 0, 2.9140926e-08, 0, -0.33333334, 0, 1, 0)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="Whale/XROrigin3D"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.6, 0)
+
+[node name="LeftController" type="XRController3D" parent="Whale/XROrigin3D"]
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whale/XROrigin3D/LeftController"]
+mesh = SubResource("SphereMesh_ncpny")
+
+[node name="RightController" type="XRController3D" parent="Whale/XROrigin3D"]
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whale/XROrigin3D/RightController"]
+mesh = SubResource("SphereMesh_6u44e")
+skeleton = NodePath("../../LeftController")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Whale/XROrigin3D"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0.79999995, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Whale/XROrigin3D/OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3, 0)
+material_override = ExtResource("3_80de6")
+mesh = SubResource("SphereMesh_lwrbq")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Whale"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.74386674, 1.9099998)
+lifetime = 25.34
+process_material = SubResource("ParticleProcessMaterial_dmba7")
+draw_pass_1 = SubResource("SphereMesh_80w17")
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="Whale"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.6666665)
+strength = 30.83
+radius = 2.0
+
+[node name="ship-pirate-small2" parent="." instance=ExtResource("8_ifwaa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[connection signal="left_thumbstick_moved" from="." to="Whale" method="_on_node_3d_left_thumbstick_moved"]
