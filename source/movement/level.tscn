@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://uu8ufa1uyabv"]
+
+[ext_resource type="Material" uid="uid://c37hn0qf6ps2g" path="res://materials/water.tres" id="1_vonw3"]
+[ext_resource type="PackedScene" uid="uid://b3yuvlks3wbp7" path="res://vr.tscn" id="2_oi3di"]
+[ext_resource type="PackedScene" uid="uid://xbfhdcvascoa" path="res://props/craft_racer.tscn" id="3_0b4ue"]
+[ext_resource type="Script" uid="uid://bklxsknmehqxx" path="res://props/craft_racer.gd" id="4_0b4ue"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xgho"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_u52ul"]
+material = SubResource("StandardMaterial3D_5xgho")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0b4ue"]
+material = ExtResource("1_vonw3")
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0b4ue"]
+albedo_color = Color(0, 0.8666667, 1, 1)
+emission_enabled = true
+emission = Color(0, 0.58431375, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_f2txt"]
+material = SubResource("StandardMaterial3D_0b4ue")
+flip_faces = true
+radius = 100.0
+height = 200.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ainy"]
+albedo_color = Color(0.0019824093, 0.1726323, 0.7052039, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_n6hdu"]
+material = SubResource("StandardMaterial3D_1ainy")
+flip_faces = true
+radius = 50.0
+height = 50.0
+is_hemisphere = true
+
+[node name="Level" type="Node3D"]
+
+[node name="Sun" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 20)
+mesh = SubResource("SphereMesh_u52ul")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sun"]
+transform = Transform3D(1, 0, 0, 0, 0.7071067, 0.70710677, 0, -0.70710677, 0.7071067, 0, 0, 0)
+
+[node name="Water Surface" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_0b4ue")
+
+[node name="player_craft" parent="." instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -18)
+script = ExtResource("4_0b4ue")
+
+[node name="VRController" parent="player_craft" instance=ExtResource("2_oi3di")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 6, -5)
+
+[node name="painting" type="Node3D" parent="."]
+
+[node name="craft_racer2" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="craft_racer4" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -5, -6)
+
+[node name="craft_racer6" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -18, 0)
+
+[node name="craft_racer9" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -6)
+
+[node name="craft_racer10" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 0)
+
+[node name="craft_racer5" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -6)
+
+[node name="craft_racer7" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, -4, 0)
+
+[node name="craft_racer8" parent="painting" instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0, -6)
+
+[node name="Skybox" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_f2txt")
+
+[node name="Oceanbox" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
+mesh = SubResource("SphereMesh_n6hdu")
+
+[connection signal="left_stick_move" from="player_craft/VRController" to="player_craft" method="_on_vr_controller_left_stick_move"]
+[connection signal="right_stick_move" from="player_craft/VRController" to="player_craft" method="_on_vr_controller_right_stick_move"]

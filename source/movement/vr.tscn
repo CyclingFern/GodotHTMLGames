@@ -1,0 +1,133 @@
+[gd_scene load_steps=9 format=3 uid="uid://b3yuvlks3wbp7"]
+
+[ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
+[ext_resource type="SphereMesh" uid="uid://coopguph20um7" path="res://props/teleport_shape.tres" id="2_ysqkv"]
+[ext_resource type="Material" uid="uid://c37hn0qf6ps2g" path="res://materials/water.tres" id="3_80de6"]
+[ext_resource type="Script" uid="uid://b7lkhxj7i61jw" path="res://teleport_button.gd" id="4_jqvlu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncpny"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ncpny"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 4.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_80de6"]
+height = 4.0
+radius = 0.01
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6u44e"]
+height = 1.0
+
+[node name="VRController" type="Node3D"]
+script = ExtResource("1_ncpny")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.49999997, 0, -0.5, 0.8660253, 0, 4, 0)
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_ncpny")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(0.68301266, -0.72091585, -0.11736244, 0.1830127, 0.3244692, -0.9280227, 0.70710677, 0.61237246, 0.35355335, 0.3, 1, 0)
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_ncpny")
+skeleton = NodePath("../../LeftController")
+
+[node name="TeleportRay" type="MeshInstance3D" parent="XROrigin3D/RightController/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+visible = false
+mesh = SubResource("CylinderMesh_ncpny")
+
+[node name="TeleportRayArea3D" type="Area3D" parent="XROrigin3D/RightController/MeshInstance3D/TeleportRay"]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/RightController/MeshInstance3D/TeleportRay/TeleportRayArea3D"]
+shape = SubResource("CylinderShape3D_80de6")
+
+[node name="TeleportController" type="Node3D" parent="XROrigin3D"]
+visible = false
+
+[node name="Center" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="Up" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, -2)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+script = ExtResource("4_jqvlu")
+vector2 = Vector2(0, 1)
+hoverMaterial = ExtResource("3_80de6")
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/TeleportController/Up"]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/TeleportController/Up/Area3D"]
+shape = SubResource("CylinderShape3D_6u44e")
+
+[node name="UpRight" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 2, 0, -2)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="Right" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 2, 0, 0)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="DownRight" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 2, 0, 2)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="Down" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 2)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="DownLeft" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, -2, 0, 2)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="Left" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, -2, 0, 0)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="UpLeft" type="MeshInstance3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, -2, 0, -2)
+mesh = ExtResource("2_ysqkv")
+skeleton = NodePath("../../..")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 452.0
+offset_bottom = 154.0
+text = "Enter VR"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+light_size = 5.0
+
+[connection signal="hover_enter" from="XROrigin3D/TeleportController/Up" to="." method="_on_teleport_up_hover_enter"]
+[connection signal="area_entered" from="XROrigin3D/TeleportController/Up/Area3D" to="XROrigin3D/TeleportController/Up" method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="XROrigin3D/TeleportController/Up/Area3D" to="XROrigin3D/TeleportController/Up" method="_on_area_3d_area_exited"]
+[connection signal="mouse_entered" from="XROrigin3D/TeleportController/Up/Area3D" to="XROrigin3D/TeleportController/Up" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="XROrigin3D/TeleportController/Up/Area3D" to="XROrigin3D/TeleportController/Up" method="_on_area_3d_mouse_exited"]
