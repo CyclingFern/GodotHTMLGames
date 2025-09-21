@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c37hn0qf6ps2g"]
+
+[ext_resource type="Texture2D" uid="uid://dnet4womacreb" path="res://patterns/pattern_49.png" id="1_6gfwt"]
+
+[resource]
+albedo_color = Color(0, 0.50980395, 1, 1)
+normal_enabled = true
+normal_scale = 0.46
+normal_texture = ExtResource("1_6gfwt")

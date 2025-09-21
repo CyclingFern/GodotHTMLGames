@@ -1,0 +1,164 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3yuvlks3wbp7"]
+
+[ext_resource type="Script" uid="uid://b3rimadp5aaim" path="res://vr.gd" id="1_ncpny"]
+[ext_resource type="Script" uid="uid://c1jmcw2tykhsh" path="res://right_controller_label.gd" id="2_80de6"]
+[ext_resource type="PackedScene" uid="uid://l74nwyjai40q" path="res://props/teleport_button.tscn" id="2_ysqkv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncpny"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ncpny"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 4.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_80de6"]
+height = 4.0
+radius = 0.01
+
+[sub_resource type="GDScript" id="GDScript_6u44e"]
+script/source = "extends Node3D
+
+signal teleport(Vector2)
+
+var primed: bool
+var clicked: bool
+
+func _physics_process(delta: float) -> void:
+	primed = false
+	clicked = false
+
+func _on_right_controller_input_float_changed(name: String, value: float) -> void:
+	primed = name == \"trigger\" && value >= 0.3
+
+
+func _on_right_controller_button_released(name: String) -> void:
+	clicked = name == \"trigger_click\"
+		
+
+
+func _on_up_teleport(vector2: Variant) -> void:
+	teleport.emit(vector2)
+"
+
+[node name="VRController" type="Node3D"]
+script = ExtResource("1_ncpny")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.49999997, 0, -0.5, 0.8660253, 0, 4, 0)
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+mesh = SubResource("BoxMesh_ncpny")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1, 0)
+tracker = &"right_hand"
+show_when_tracked = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_ncpny")
+skeleton = NodePath("../../LeftController")
+
+[node name="TeleportRay" type="MeshInstance3D" parent="XROrigin3D/RightController/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+mesh = SubResource("CylinderMesh_ncpny")
+
+[node name="TeleportRayArea3D" type="Area3D" parent="XROrigin3D/RightController/MeshInstance3D/TeleportRay"]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/RightController/MeshInstance3D/TeleportRay/TeleportRayArea3D"]
+shape = SubResource("CylinderShape3D_80de6")
+
+[node name="RightControllerLabel" type="Label3D" parent="XROrigin3D/RightController/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -8.742278e-09, -0.2)
+pixel_size = 0.002
+text = "0.99"
+script = ExtResource("2_80de6")
+
+[node name="TeleportController" type="Node3D" parent="XROrigin3D"]
+script = SubResource("GDScript_6u44e")
+
+[node name="Center Row" type="Node3D" parent="XROrigin3D/TeleportController"]
+
+[node name="Up" parent="XROrigin3D/TeleportController/Center Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, -2)
+skeleton = NodePath("../../../..")
+direction = Vector2(0, -1)
+
+[node name="Center" parent="XROrigin3D/TeleportController/Center Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, 0)
+skeleton = NodePath("../../../..")
+
+[node name="Down" parent="XROrigin3D/TeleportController/Center Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, 2)
+skeleton = NodePath("../../../..")
+direction = Vector2(0, 1)
+
+[node name="Left Row" type="Node3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="Up" parent="XROrigin3D/TeleportController/Left Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, -2)
+skeleton = NodePath("../../../..")
+direction = Vector2(-1, -1)
+
+[node name="Left" parent="XROrigin3D/TeleportController/Left Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, 0)
+skeleton = NodePath("../../../..")
+direction = Vector2(-1, 0)
+
+[node name="Down" parent="XROrigin3D/TeleportController/Left Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, 2)
+skeleton = NodePath("../../../..")
+direction = Vector2(-1, 1)
+
+[node name="Right Row" type="Node3D" parent="XROrigin3D/TeleportController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Up" parent="XROrigin3D/TeleportController/Right Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, -2)
+skeleton = NodePath("../../../..")
+direction = Vector2(1, -1)
+
+[node name="Right" parent="XROrigin3D/TeleportController/Right Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, 0)
+skeleton = NodePath("../../../..")
+direction = Vector2(1, 0)
+
+[node name="Down" parent="XROrigin3D/TeleportController/Right Row" instance=ExtResource("2_ysqkv")]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 0, 2)
+skeleton = NodePath("../../../..")
+direction = Vector2(1, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_right = 452.0
+offset_bottom = 154.0
+text = "Enter VR"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+light_size = 5.0
+
+[connection signal="button_released" from="XROrigin3D/RightController" to="XROrigin3D/RightController/MeshInstance3D/RightControllerLabel" method="_on_right_controller_button_released"]
+[connection signal="button_released" from="XROrigin3D/RightController" to="XROrigin3D/TeleportController" method="_on_right_controller_button_released"]
+[connection signal="input_float_changed" from="XROrigin3D/RightController" to="XROrigin3D/TeleportController" method="_on_right_controller_input_float_changed"]
+[connection signal="teleport" from="XROrigin3D/TeleportController" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Center Row/Up" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Center Row/Center" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Center Row/Down" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Left Row/Up" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Left Row/Left" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Left Row/Down" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Right Row/Up" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Right Row/Right" to="." method="_on_teleport_controller_teleport"]
+[connection signal="teleport" from="XROrigin3D/TeleportController/Right Row/Down" to="." method="_on_teleport_controller_teleport"]

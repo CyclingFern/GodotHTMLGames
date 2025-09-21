@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://xbfhdcvascoa"]
+
+[ext_resource type="PackedScene" uid="uid://lywh10861uwh" path="res://kenny_space_kit/craft_racer.glb" id="1_a7llp"]
+[ext_resource type="Material" uid="uid://b8tt6m5sgyu4d" path="res://materials/splash.tres" id="2_ggmpi"]
+[ext_resource type="Script" uid="uid://cbmt7523ivu5y" path="res://scripts/splash.gd" id="3_7mt4a"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7mt4a"]
+material = ExtResource("2_ggmpi")
+
+[node name="craft_racer2" instance=ExtResource("1_a7llp")]
+
+[node name="craft_racer" parent="." index="0"]
+transform = Transform3D(-5, 0, -4.371139e-07, 0, 5, 0, 4.371139e-07, 0, -5, 0, 0, 0)
+
+[node name="splash" type="MeshInstance3D" parent="craft_racer" index="0"]
+transform = Transform3D(1, -7.1054274e-15, 0, 0, 1.19248815e-08, 1, -7.1054274e-15, -1, 1.19248815e-08, 8.742278e-08, 0, -1)
+mesh = SubResource("PlaneMesh_7mt4a")
+script = ExtResource("3_7mt4a")
+
+[node name="splash2" type="MeshInstance3D" parent="craft_racer" index="1"]
+transform = Transform3D(1, -7.1054274e-15, 1.0587912e-22, 0, 1.19248815e-08, 1, -7.1054274e-15, -1, 1.19248815e-08, 1.7484556e-08, 0, -0.2)
+mesh = SubResource("PlaneMesh_7mt4a")
+script = ExtResource("3_7mt4a")
+
+[node name="splash3" type="MeshInstance3D" parent="craft_racer" index="2"]
+transform = Transform3D(1, -7.1054274e-15, 2.1175824e-22, 0, 1.19248815e-08, 1, -7.1054274e-15, -1, 1.19248815e-08, -3.4969112e-08, 0, 0.4)
+mesh = SubResource("PlaneMesh_7mt4a")
+script = ExtResource("3_7mt4a")
+
+[node name="splash4" type="MeshInstance3D" parent="craft_racer" index="3"]
+transform = Transform3D(1, -7.1054274e-15, 2.1175824e-22, 0, 1.19248815e-08, 1, -7.1054274e-15, -1, 1.19248815e-08, -8.742278e-08, 0, 1)
+mesh = SubResource("PlaneMesh_7mt4a")
+script = ExtResource("3_7mt4a")
+
+[node name="splash5" type="MeshInstance3D" parent="craft_racer" index="4"]
+transform = Transform3D(1, -7.1054274e-15, 2.1175824e-22, 0, 1.19248815e-08, 1, -7.1054274e-15, -1, 1.19248815e-08, -1.223919e-07, 0, 1.4)
+mesh = SubResource("PlaneMesh_7mt4a")
+script = ExtResource("3_7mt4a")
+
+[node name="splash6" type="MeshInstance3D" parent="craft_racer" index="5"]
+transform = Transform3D(1, -7.1054274e-15, 2.1175824e-22, 0, 1.19248815e-08, 1, -7.1054274e-15, -1, 1.19248815e-08, -1.7484557e-07, 0, 2)
+mesh = SubResource("PlaneMesh_7mt4a")
+script = ExtResource("3_7mt4a")
