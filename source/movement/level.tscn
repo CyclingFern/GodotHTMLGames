@@ -90,5 +90,8 @@ mesh = SubResource("SphereMesh_f2txt")
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
 mesh = SubResource("SphereMesh_n6hdu")
 
+[node name="craft_racer2" parent="." instance=ExtResource("3_0b4ue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -6)
+
 [connection signal="left_stick_move" from="player_craft/VRController" to="player_craft" method="_on_vr_controller_left_stick_move"]
 [connection signal="right_stick_move" from="player_craft/VRController" to="player_craft" method="_on_vr_controller_right_stick_move"]
