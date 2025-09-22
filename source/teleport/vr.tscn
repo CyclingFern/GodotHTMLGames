@@ -149,9 +149,6 @@ text = "Enter VR"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 light_size = 5.0
 
-[connection signal="button_released" from="XROrigin3D/RightController" to="XROrigin3D/RightController/MeshInstance3D/RightControllerLabel" method="_on_right_controller_button_released"]
-[connection signal="button_released" from="XROrigin3D/RightController" to="XROrigin3D/TeleportController" method="_on_right_controller_button_released"]
-[connection signal="input_float_changed" from="XROrigin3D/RightController" to="XROrigin3D/TeleportController" method="_on_right_controller_input_float_changed"]
 [connection signal="teleport" from="XROrigin3D/TeleportController" to="." method="_on_teleport_controller_teleport"]
 [connection signal="teleport" from="XROrigin3D/TeleportController/Center Row/Up" to="." method="_on_teleport_controller_teleport"]
 [connection signal="teleport" from="XROrigin3D/TeleportController/Center Row/Center" to="." method="_on_teleport_controller_teleport"]

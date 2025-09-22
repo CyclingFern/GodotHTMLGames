@@ -1,4 +1,4 @@
 extends Label3D
 
-func _on_right_controller_button_released(name: String) -> void:
-	text = name
+func _process(delta: float) -> void:
+	text = str($"../..".get_input("trigger_click"))
