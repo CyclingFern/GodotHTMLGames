@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://l74nwyjai40q"]
+
+[ext_resource type="SphereMesh" uid="uid://coopguph20um7" path="res://vr/teleport_shape.tres" id="1_c5dlx"]
+[ext_resource type="Script" uid="uid://b7lkhxj7i61jw" path="res://vr/teleport_button.gd" id="2_yq731"]
+[ext_resource type="Material" uid="uid://ydqfkuox074c" path="res://vr/teleport_selected.tres" id="3_183ve"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6u44e"]
+height = 1.0
+
+[node name="Up" type="MeshInstance3D"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("1_c5dlx")
+skeleton = NodePath("../../..")
+script = ExtResource("2_yq731")
+hoverMaterial = ExtResource("3_183ve")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_6u44e")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
