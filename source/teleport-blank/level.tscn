@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://uu8ufa1uyabv"]
+
+[ext_resource type="PackedScene" uid="uid://b3yuvlks3wbp7" path="res://vr/vr.tscn" id="2_oi3di"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u52ul"]
+
+[node name="Level" type="Node3D"]
+
+[node name="VRController" parent="." instance=ExtResource("2_oi3di")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.5, 0)
+
+[node name="Painting" type="Node3D" parent="."]
+
+[node name="Light" type="Node3D" parent="Painting"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Painting/Light"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 5.5297422, 0)
+
+[node name="Enviroment" type="Node3D" parent="Painting"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Painting/Enviroment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.074571)
+mesh = SubResource("BoxMesh_u52ul")
+skeleton = NodePath("../../..")
