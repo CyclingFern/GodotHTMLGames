@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://c65nwoqxm0ne1"]
+
+[ext_resource type="PackedScene" uid="uid://diqwbjhmkv3ku" path="res://fish/Whale.fbx" id="1_6oavf"]
+[ext_resource type="Script" uid="uid://b04f7qb1ss1d7" path="res://props/whale.gd" id="1_dfsvl"]
+[ext_resource type="Script" uid="uid://caow8kkk2y0ql" path="res://fish/whale.gd" id="2_4dwgh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6oavf"]
+radius = 3.0
+height = 10.994141
+
+[node name="Whale" type="Node3D"]
+script = ExtResource("1_dfsvl")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+motion_mode = 1
+
+[node name="Whale" parent="CharacterBody3D" instance=ExtResource("1_6oavf")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+script = ExtResource("2_4dwgh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.38680714, -1.2807617)
+shape = SubResource("CapsuleShape3D_6oavf")

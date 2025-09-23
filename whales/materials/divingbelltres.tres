@@ -4,8 +4,7 @@
 
 [resource]
 transparency = 1
-cull_mode = 2
-albedo_color = Color(0, 1, 1, 0.36862746)
+albedo_color = Color(0, 1, 1, 0.4862745)
 emission_energy_multiplier = 7.56
 normal_enabled = true
 normal_texture = ExtResource("1_mvop4")
