@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0f70dqbsrb08"]
+
+[ext_resource type="Script" uid="uid://b04f7qb1ss1d7" path="res://props/whale.gd" id="1_7o5t6"]
+[ext_resource type="PackedScene" uid="uid://di5ca757bni3h" path="res://fish/Fish2.fbx" id="2_pyq25"]
+[ext_resource type="Script" uid="uid://caow8kkk2y0ql" path="res://fish/play_swim_animation.gd" id="3_mmq0n"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mmq0n"]
+radius = 4.035
+
+[node name="Fish2" type="Node3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_7o5t6")
+speed = 6.0
+turn_speed = 6.0
+wander_radius = 20.0
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+motion_mode = 1
+
+[node name="Fish2" parent="CharacterBody3D" instance=ExtResource("2_pyq25")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+script = ExtResource("3_mmq0n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 1.098526)
+shape = SubResource("CylinderShape3D_mmq0n")

@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://diqwbjhmkv3ku" path="res://fish/Whale.fbx" id="1_6oavf"]
 [ext_resource type="Script" uid="uid://b04f7qb1ss1d7" path="res://props/whale.gd" id="1_dfsvl"]
-[ext_resource type="Script" uid="uid://caow8kkk2y0ql" path="res://fish/whale.gd" id="2_4dwgh"]
+[ext_resource type="Script" uid="uid://caow8kkk2y0ql" path="res://fish/play_swim_animation.gd" id="2_4dwgh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6oavf"]
 radius = 3.0
-height = 10.994141
+height = 11.129639
 
 [node name="Whale" type="Node3D"]
 script = ExtResource("1_dfsvl")
@@ -19,5 +19,5 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0
 script = ExtResource("2_4dwgh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.38680714, -1.2807617)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.38680726, 1.8392334)
 shape = SubResource("CapsuleShape3D_6oavf")

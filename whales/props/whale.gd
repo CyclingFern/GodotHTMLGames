@@ -10,11 +10,16 @@ extends Node3D
 # Assign a Node3D in the Inspector to act as the center of the wander area.
 @export var origin_node: Node3D = null
 
+@export var time_going_max = 10
+
 var wander_target: Vector3 = Vector3.ZERO
 var origin_position: Vector3 = Vector3.ZERO
+var time_going: float = 0
+
 
 # The _ready() function is called once when the node enters the scene tree.
 func _ready():
+	time_going_max = time_going_max + randi_range(-2, 2)
 	# Set the origin for the wandering behavior.
 	# If an origin_node is assigned, use its position.
 	if origin_node != null:
@@ -28,8 +33,9 @@ func _ready():
 
 # The _physics_process() function is called every physics frame.
 func _physics_process(delta: float):
+	time_going += delta
 	# 1. Check distance to the target
-	if characterBody.global_position.distance_to(wander_target) < 1.0:
+	if characterBody.global_position.distance_to(wander_target) < 1.0 || time_going >= time_going_max:
 		_update_wander_target()
 
 	# 2. Calculate direction and rotate the fish
@@ -54,3 +60,4 @@ func _update_wander_target():
 	
 	# Set the new target within the wander_radius from the chosen origin_position.
 	wander_target = origin_position + random_direction * wander_radius
+	time_going = 0
