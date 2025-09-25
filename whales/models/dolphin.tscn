@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bl26dqmi7ambx"]
+
+[ext_resource type="PackedScene" uid="uid://d3h5b8rafyume" path="res://fish/Dolphin.fbx" id="1_aqlso"]
+
+[node name="Dolphin" instance=ExtResource("1_aqlso")]
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.53269655, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+
+[node name="PreviewCamera3D" type="Camera3D" parent="." index="2"]
+transform = Transform3D(0.68106604, 0, 0.7322221, 0, 1, 0, -0.7322221, 0, 0.68106604, 2.491693, 0, 4.7672157)
+visible = false

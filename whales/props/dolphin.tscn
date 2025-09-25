@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cuntpq5du8yrl"]
 
 [ext_resource type="Script" uid="uid://b04f7qb1ss1d7" path="res://props/whale.gd" id="1_idbey"]
-[ext_resource type="PackedScene" uid="uid://d3h5b8rafyume" path="res://fish/Dolphin.fbx" id="2_idbey"]
+[ext_resource type="PackedScene" uid="uid://bl26dqmi7ambx" path="res://models/dolphin.tscn" id="2_idbey"]
 [ext_resource type="Script" uid="uid://caow8kkk2y0ql" path="res://fish/play_swim_animation.gd" id="3_toaeu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6oavf"]
@@ -17,7 +17,7 @@ wander_radius = 20.0
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 motion_mode = 1
 
-[node name="Dolphin" parent="CharacterBody3D" instance=ExtResource("2_idbey")]
+[node name="Dolphin2" parent="CharacterBody3D" instance=ExtResource("2_idbey")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("3_toaeu")
 

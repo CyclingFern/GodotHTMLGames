@@ -21,7 +21,6 @@ textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(5.3473264e-05, 0.14894813, 0.49439, 1)
-anti_aliasing/quality/use_taa=true
 
 [xr]
 
